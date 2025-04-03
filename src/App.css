@@ -1,0 +1,15 @@
+ @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap');
+ body {
+  font-family: 'Nunito', sans-serif !important;
+  overflow-x: hidden;
+  font-family: 'Dancing Script', cursive;
+}
+
+
+.ReactModal__Overlay {
+  background-color: rgba(0, 0, 0, 0.5) !important;
+}
+.ReactModal__Content {
+  border-radius: 10px;
+  padding: 20px;
+}
