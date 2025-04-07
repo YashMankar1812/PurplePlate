@@ -1,15 +1,26 @@
-
-
 import React, { useState, useEffect } from "react";
-import Modal from "./Modal";
-import { foodItems } from "../data";
-import "aos/dist/aos.css"; // Import AOS styles
-import AOS from "aos"; // Import AOS library
-import Testimonials from "./Testimonials";
+import { foodItems } from "../data"; // Assuming your data is in data.js
+import AOS from "aos";
+import "aos/dist/aos.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useCart } from "../context/CartContext";
+import { FiHeart } from 'react-icons/fi'; // Ensure you import FiHeart
+
+AOS.init();
 
 const Menu = () => {
-  const [selectedDish, setSelectedDish] = useState(null);
   const [filter, setFilter] = useState("All");
+  const { addToCart, addToFavorites, removeFromFavorites } = useCart();
+  const [favorites, ] = useState([]); // Initialize favorites state
+
+  const toggleFavorite = (item) => {
+    if(favorites.some((favItem) => favItem.id === item.id)){
+      removeFromFavorites(item.id)
+    } else {
+      addToFavorites(item);
+    }
+  };
 
   useEffect(() => {
     AOS.init({
@@ -19,90 +30,96 @@ const Menu = () => {
     });
   }, []);
 
-  const filteredDishes = foodItems.filter((item) => {
-    return filter === "All" || item.category === filter;
-  });
+  const filteredDishes = foodItems.filter(
+    (item) => filter === "All" || item.category === filter
+  );
 
-  return (
-    <div className="min-h-screen bg-white mt-10">
-<header 
-  className=" relative p-6 text-center bg-cover bg-center bg-no-repeat shadow "
-  style={{ backgroundImage: "url('https://t4.ftcdn.net/jpg/02/92/20/37/360_F_292203735_CSsyqyS6A4Z9Czd4Msf7qZEhoxjpzZl1.jpg')" }} // Update with actual image path
->
-  {/* Background Overlay for Better Readability */}
-  <div className="absolute inset-0 bg-black bg-opacity-60"></div>
+  const handleAddToCart = (dish) => {
+    const parsedPrice = typeof dish.price === "string" ? parseFloat(dish.price.replace("$", "")) : dish.price;
 
-  {/* Section Title */}
-  <h4 className="relative text-lg sm:text-xl font-semibold text-purple-200 font-pacifico flex items-center justify-center mt-5 sm:mt-10">
-    <span className="w-10 sm:w-16 h-0.5 bg-purple-200"></span>
-    <span className="mx-3 sm:mx-4">Menu</span>
-    <span className="w-10 sm:w-16 h-0.5 bg-purple-200"></span>
-  </h4>
+    if (isNaN(parsedPrice)) {
+      console.error("Invalid price for dish:", dish);
+      toast.error("Invalid price! Please try again.");
+      return;
+    }
 
-  {/* Main Title & Categories */}
-  <div className="relative flex flex-col items-center mt-4 sm:mt-5">
-    <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-white font-dancing text-center">
-      Check Our <span className="text-purple-300">Tasty Menu</span>
-    </h3>
+    addToCart({ ...dish, price: parsedPrice });
+    toast.success(`${dish.name} added to cart!`, {
+      position: "top-right",
+      autoClose: 2000,
+    });
+  };
 
-    {/* Categories */}
-    <div className="flex flex-wrap justify-center gap-2 sm:gap-4 mt-4 sm:mt-6" data-aos="zoom-in">
-      {["Starters", "Main Course", "Desserts", "Beverages"].map((category) => (
-        <button
-          key={category}
-          className={`relative text-xs sm:text-sm md:text-base rounded-full font-medium p-2 transition-all ${
-            filter === category ? "text-white hover:text-purple-400" : "text-gray-300 hover:text-purple-200"
-          }`}
-          onClick={() => setFilter(category)}
-        >
-          {category}
-        </button>
-      ))}
-    </div>
-  </div>
-</header>
 
 
 
-<main className="p-2 sm:p-4 md:p-6 lg:p-8 mx-2 sm:mx-4 md:mx-8 lg:mx-10">
-  {/* Display Menu Items in a Responsive Grid */}
-  <div className="grid grid-cols-1  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7  gap-8 p-10" data-aos="zoom-in">
-    {filteredDishes.map((item, index) => (
-      <div
-        key={item.id}
-        className=" bg-white p-4 transition-all duration-300 cursor-pointer group"
-        onClick={() => setSelectedDish(item)}
-        data-aos="zoom-in"
-        data-aos-delay={index * 20}
-      >
-        {/* Image Container */}
-        <div className="overflow-hidden rounded-lg">
-          <img
-            src={item.image}
-            alt={item.name}
-            className="w-full h-30 object-contain rounded-md transition-transform duration-300 group-hover:scale-105"
-          />
-        </div>
-
-        {/* Name & Price Section */}
-        <div className="mt-5 flex justify-between items-center">
-          {/* <h3 className=" md:text-sm font-semibold  text-gray-800 m-5">{item.name}</h3> */}
-          {/* <p className="text-lg font-bold text-red-500">${item.price}</p> */}
-        </div>
+  return (
+    <div className="min-h-screen bg-gray-100 text-gray-800 py-8 px-4 sm:px-6 lg:px-10 font-nunito">
+      <ToastContainer />
+      <h2 className="text-5xl text-purple-700 text-center uppercase p-10">Menu</h2>
+      <div className="flex justify-center items-center mb-6">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-dancing font-bold text-purple-700 text-center">
+          Our Delicious Dishes
+        </h2>
       </div>
-    ))}
-  </div>
-</main>
-
-
-      {/* Display Modal when a dish is selected */}
-      {selectedDish && <Modal dish={selectedDish} onClose={() => setSelectedDish(null)} />}
-
-      {/* <Testimonials /> */}
+      <div className="flex overflow-x-auto gap-3 sm:gap-4 p-5 scrollbar-hide justify-center">
+        {["All", "Starters", "Main Course", "Desserts", "Beverages"].map((category, index) => (
+          <button
+            key={category}
+            className={`px-4 sm:px-6 py-2 text-sm sm:text-base font-semibold rounded-full transition-all ${
+              filter === category
+                ? "bg-purple-600 text-white shadow-lg scale-110"
+                : "bg-gray-200 hover:bg-purple-400 hover:text-white"
+            }`}
+            onClick={() => setFilter(category)}
+            style={{ transitionDelay: `${index * 50}ms` }}
+          >
+            {category}
+          </button>
+        ))}
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-6xl mx-auto mt-6">
+        {filteredDishes.map((dish, index) => (
+          <div
+            key={`${dish.id}-${index}`} // Use a composite key to ensure uniqueness
+            className="bg-white p-4 rounded-lg shadow-lg hover:shadow-xl transition-all transform duration-300 m-10"
+            data-aos="fade-up"
+            data-aos-delay={index * 100}
+          >
+            <img
+              src={dish.image}
+              alt={dish.name}
+              className="w-full h-40 object-cover rounded-md"
+            />
+            <h3 className="mt-3 text-lg font-bold">{dish.name}</h3>
+            <p className="text-gray-600 text-sm">{dish.description}</p>
+            <p className="text-purple-700 font-semibold mt-2">{dish.price}</p>
+            <div className="flex justify-between mt-3">
+            <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleFavorite(item);
+                    }}
+                    className="absolute top-3 right-3 z-10 p-2 bg-white/80 rounded-full backdrop-blur-sm"
+                    aria-label={favorites.some((favItem) => favItem.id === item.id) ? "Remove from favorites" : "Add to favorites"}
+                  >
+                    <FiHeart
+                      className={`h-5 w-5 ${favorites.some((favItem) => favItem.id === item.id) ? "text-red-500 fill-current" : "text-gray-400"}`}
+                    />
+                  </button>
+   
+              <button
+                className="border border-orange-500 text-orange-500 font-semibold px-4 py-2 rounded-lg hover:bg-orange-400 hover:text-white transition-all"
+                onClick={() => handleAddToCart(dish)}
+              >
+                Pick Now
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
 
 export default Menu;
-
-

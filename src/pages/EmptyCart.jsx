@@ -5,12 +5,12 @@ const EmptyCart = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-white text-center font-nunito" id="cart">
+    <div className="flex flex-col items-center justify-center  bg-white text-center font-nunito" id="cart">
       <img
         // src="https://assets-v2.lottiefiles.com/a/76623d28-4e37-11ef-87f5-03e9496a5cb5/PR2PeUMHrd.gif" 
         src="https://comodorbyfleet.uk/images/webstrot/header/loader.gif"
         alt="Empty Cart"
-        className="w-74 h-64"
+        className="w-54 h-44"
       />
       <h2 className="text-2xl font-semibold mt-4">Cart is Empty</h2>
       <p className="text-gray-600 mt-2">Looks like you haven’t Order anything to your cart.</p>

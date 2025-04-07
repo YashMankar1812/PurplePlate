@@ -8,9 +8,7 @@ import { Link } from "react-router-dom";
 import { IoIosHeart } from "react-icons/io";
 import { IoMdPerson } from "react-icons/io";
 
-
-
-const Header = () => {
+const Header = ({ user, logout }) => {
   const { cart } = useCart(); 
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -26,84 +24,88 @@ const Header = () => {
         <div className="max-w-6xl mx-auto flex justify-between items-center">
           {/* Logo Section */}
           <h1
-      className="text-purple-50 text-2xl font-semibold font-dancing cursor-pointer"
-      onClick={() => navigate("/")}
-    >
-      The Purple Plate
-    </h1>
-          
-
-          {/* Hamburger Menu (Visible Only on Small Screens) */}
-          <div className="md:hidden pl-40">
-            <button
-              className="text-gray-600 text-2xl transition duration-300 focus:outline-none"
-              onClick={toggleMenu}
-            >
-              {isMenuOpen ? <FaTimes /> : <FaBars />}
-            </button>
+            className="text-purple-50 text-2xl font-semibold font-dancing cursor-pointer"
+            onClick={() => navigate("/")}
+          >
+            The Purple Plate
+          </h1>
+          {user ? (
+          <div>
+            <button onClick={logout} className="ml-4">Logout {user}</button>
           </div>
-
+        ) : (
+          <Link to="/login" className="ml-4">
+            <IoMdPerson className="text-2xl" />
+          </Link>
+        )}
+          
           {/* Desktop Navigation Links (Hidden on Mobile) */}
           <div className="hidden md:flex md:items-center md:gap-8">
             <NavLink to="/" className="text-gray-300 font-thin text-lg hover:text-purple-600">
               Home
             </NavLink>
-            {/* <NavLink to="/about" className="text-gray-300  font-thin text-lg hover:text-purple-600">
-              About
-            </NavLink> */}
-            <NavLink to="/gallery" className="text-gray-300  font-thin text-lg hover:text-purple-600">
+            <NavLink to="/gallery" className="text-gray-300 font-thin text-lg hover:text-purple-600">
               Gallery
             </NavLink>
-            <NavLink to="/menu" className="text-gray-300  font-thin text-lg hover:text-purple-600">
+            <NavLink to="/menu" className="text-gray-300 font-thin text-lg hover:text-purple-600">
               Menu
             </NavLink>
-            <NavLink to="/blog" className="text-gray-300  font-thin text-lg hover:text-purple-600">
+            <NavLink to="/blog" className="text-gray-300 font-thin text-lg hover:text-purple-600">
               Blog
             </NavLink>
             <NavLink to="/contact" className="text-gray-300 font-thin text-lg hover:text-purple-800">
               Contact
             </NavLink>
           </div>
-          {/* <button className="flex gap-5">
-          <FaCartShopping  className="text-white"/>
-          <FaUserAlt className="text-white" />
-          </button> */}
-        
 
-        <div className="relative flex items-center gap-3 md:gap-5 p-2 bg-transparent">
-      {/* Cart Icon */}
-      <div className="group relative">
-        <Link to="/cart">
-          <FaCartShopping className="text-white cursor-pointer transition-transform duration-300 transform group-hover:scale-110" />
-        </Link>
-        <span className="absolute left-1/2 -translate-x-1/2 bottom-full mb-1 scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-100 bg-black text-white text-xs px-2 py-1 rounded transition-all">
-          Cart
-        </span>
-      </div>
+          {/* Icons Section */}
+          <div className="flex items-center gap-4 md:gap-5">
+            {/* Mobile Menu Button (Visible Only on Small Screens) */}
+            <button
+              className="md:hidden text-white text-2xl transition duration-300 focus:outline-none"
+              onClick={toggleMenu}
+            >
+              {isMenuOpen ? <FaTimes /> : <FaBars />}
+            </button>
 
-      {/* User Icon  */}
-      <div className="group relative">
-        <Link to="/profile">
-          <IoMdPerson  className="text-white cursor-pointer transition-transform duration-300 transform group-hover:scale-110" />
-        </Link>
-        <span className="absolute left-1/2 -translate-x-1/2 bottom-full mb-1 scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-100 bg-black text-white text-xs px-2 py-1 rounded transition-all">
-          Profile
-        </span>
-      </div>
+            {/* Desktop Icons (Hidden on Mobile) */}
+            <div className="hidden md:flex items-center gap-3 md:gap-5">
+              {/* Cart Icon */}
+              <div className="group relative">
+                <Link to="/cart">
+                  <FaCartShopping className="text-white cursor-pointer transition-transform duration-300 transform group-hover:scale-110" />
+                  {cart.length > 0 && (
+                    <span className="absolute -top-2 -right-2 bg-purple-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                      {cart.length}
+                    </span>
+                  )}
+                </Link>
+                <span className="absolute left-1/2 -translate-x-1/2 bottom-full mb-1 scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-100 bg-black text-white text-xs px-2 py-1 rounded transition-all">
+                  Cart
+                </span>
+              </div>
 
+              {/* User Icon */}
+              <div className="group relative">
+                <Link to="/profile">
+                  <IoMdPerson className="text-white cursor-pointer transition-transform duration-300 transform group-hover:scale-110" />
+                </Link>
+                <span className="absolute left-1/2 -translate-x-1/2 bottom-full mb-1 scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-100 bg-black text-white text-xs px-2 py-1 rounded transition-all">
+                  Profile
+                </span>
+              </div>
 
-
-       {/* Wishlist */}
-            <div className="group relative">
-        <Link to="/wishlist">
-          <IoIosHeart className="text-white cursor-pointer hover:text-red-500 transition-transform duration-300 transform group-hover:scale-110" />
-        </Link>
-        <span className="absolute left-1/2 -translate-x-1/2 bottom-full mb-1 scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-100 bg-black text-white text-xs px-2 py-1 rounded transition-all ">
-          Favourite
-        </span>
-      </div>
-    </div>
-
+              {/* Wishlist */}
+              <div className="group relative">
+                <Link to="/wishlist">
+                  <IoIosHeart className="text-white cursor-pointer hover:text-red-500 transition-transform duration-300 transform group-hover:scale-110" />
+                </Link>
+                <span className="absolute left-1/2 -translate-x-1/2 bottom-full mb-1 scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-100 bg-black text-white text-xs px-2 py-1 rounded transition-all">
+                  Favourite
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
       </nav>
 
@@ -111,39 +113,54 @@ const Header = () => {
       <div
         className={`fixed top-0 left-0 w-full h-full bg-black text-white transform ${
           isMenuOpen ? "translate-x-0" : "-translate-x-full"
-        } transition-transform duration-300 ease-in-out z-50 md:hidden`} // Hidden on medium screens and above
+        } transition-transform duration-300 ease-in-out z-40 pt-20 md:hidden`}
       >
-        <button className="absolute top-4 right-4 text-2xl" onClick={toggleMenu}>
-          <FaTimes />
-        </button>
-        <nav className="flex flex-col mt-60 text-center">
-          <NavLink to="/" className="block text-2xl py-4 px-6 text-gray-400 hover:bg-gray-800" onClick={toggleMenu}>
+        <nav className="flex flex-col text-center">
+          <NavLink to="/" className="block text-xl py-4 px-6 text-gray-300 hover:bg-gray-800" onClick={toggleMenu}>
             Home
           </NavLink>
-          {/* <NavLink to="/about" className="block text-2xl py-4 px-6 text-gray-400 hover:bg-gray-800" onClick={toggleMenu}>
-            About
-          </NavLink> */}
-            <NavLink to="/gallery" className="block text-2xl py-4 px-6 text-gray-400 hover:bg-gray-800" onClick={toggleMenu}>
-              Gallery
-            </NavLink>
-          <NavLink to="/menu" className="block text-2xl py-4 px-6 text-gray-400 hover:bg-gray-800" onClick={toggleMenu}>
+          <NavLink to="/gallery" className="block text-xl py-4 px-6 text-gray-300 hover:bg-gray-800" onClick={toggleMenu}>
+            Gallery
+          </NavLink>
+          <NavLink to="/menu" className="block text-xl py-4 px-6 text-gray-300 hover:bg-gray-800" onClick={toggleMenu}>
             Menu
           </NavLink>
-          <NavLink to="/blog" className="block text-2xl py-4 px-6 text-gray-400  hover:bg-gray-800" onClick={toggleMenu}>
+          <NavLink to="/blog" className="block text-xl py-4 px-6 text-gray-300 hover:bg-gray-800" onClick={toggleMenu}>
             Blog
           </NavLink>
-          <NavLink to="/contact" className="block text-2xl py-4 px-6 text-gray-400 hover:bg-gray-800" onClick={toggleMenu}>
+          <NavLink to="/contact" className="block text-xl py-4 px-6 text-gray-300 hover:bg-gray-800" onClick={toggleMenu}>
             Contact
           </NavLink>
         </nav>
+
+        {/* Mobile Icons (Visible in Menu) */}
+        <div className="flex justify-center gap-8 mt-12">
+          <Link to="/cart" className="flex flex-col items-center" onClick={toggleMenu}>
+            <FaCartShopping className="text-white text-2xl" />
+            <span className="text-xs mt-1 text-gray-300">Cart</span>
+            {cart.length > 0 && (
+              <span className="absolute mt-[-8px] ml-5 bg-purple-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                {cart.length}
+              </span>
+            )}
+          </Link>
+          
+          <Link to="/profile" className="flex flex-col items-center" onClick={toggleMenu}>
+            <IoMdPerson className="text-white text-2xl" />
+            <span className="text-xs mt-1 text-gray-300">Profile</span>
+          </Link>
+          
+          <Link to="/wishlist" className="flex flex-col items-center" onClick={toggleMenu}>
+            <IoIosHeart className="text-white text-2xl" />
+            <span className="text-xs mt-1 text-gray-300">Favorites</span>
+          </Link>
+        </div>
       </div>
     </>
   );
 };
 
 export default Header;
-
-
 
 
 

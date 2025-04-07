@@ -60,7 +60,7 @@ const Gallery = () => {
                 <img
                   src={card.image}
                   alt="Gallery Image"
-                  className="w-full h-52 p-10 sm:h-60 md:h-72 rounded-lg object-cover mb-4 transition-transform transform hover:scale-105 duration-300 cursor-pointer"
+                  className="w-full h-62 p-5 sm:h-60 md:h-72 rounded-lg object-cover mb-4 transition-transform transform hover:scale-105 duration-300 cursor-pointer"
                   onClick={() => setSelectedImage(card.image)}
                   data-aos="zoom-in"
                 />

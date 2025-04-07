@@ -124,66 +124,9 @@ import "aos/dist/aos.css";
 import MenuGrid from "./MenuGrid";
 
 
-// const foodItems = [
-//   {  img: "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_288,h_360/MERCHANDISING_BANNERS/IMAGES/MERCH/2024/7/2/8f508de7-e0ac-4ba8-b54d-def9db98959e_cake.png" ,
-//       description :"A rich and moist dessert with deep chocolate flavor."
-// },
-//   {  img: "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_288,h_360/MERCHANDISING_BANNERS/IMAGES/MERCH/2024/7/2/8f508de7-e0ac-4ba8-b54d-def9db98959e_chole%20bhature.png" ,
-//      description:"A spicy chickpea curry served with fluffy fried bread."   
-//  },
-//   { img: "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_288,h_360/MERCHANDISING_BANNERS/IMAGES/MERCH/2024/7/2/6ef07bda-b707-48ea-9b14-2594071593d1_Khichdi.png" ,
-//     description:"A comforting one-pot dish of lentils and rice, lightly spiced."
-// },
-//   {  img: "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_288,h_360/MERCHANDISING_BANNERS/IMAGES/MERCH/2024/7/2/6ef07bda-b707-48ea-9b14-2594071593d1_Biryani.png",
-//      description:"A fragrant rice dish layered with spiced meat or vegetables."
-//   },
-//   {  img: "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_288,h_360/MERCHANDISING_BANNERS/IMAGES/MERCH/2024/7/2/6ef07bda-b707-48ea-9b14-2594071593d1_Noodles.png",
-//    description:"A stir-fried or soupy delight, packed with flavors and veggies"
-// },
-//   {  img: "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_288,h_360/MERCHANDISING_BANNERS/IMAGES/MERCH/2024/7/2/6ef07bda-b707-48ea-9b14-2594071593d1_Paratha.png" ,
-//   description:"A crispy, layered Indian flatbread, stuffed or plain."},
-//   {  img: "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_288,h_360/MERCHANDISING_BANNERS/IMAGES/MERCH/2024/7/2/3f2c40d3-96c7-44ce-8b35-aef6ea746cdc_lassi.png",
-//    description:"A refreshing yogurt-based drink, sweet or salted."
-// },
-//   {  img: "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_288,h_360/MERCHANDISING_BANNERS/IMAGES/MERCH/2024/7/2/6ef07bda-b707-48ea-9b14-2594071593d1_Gulab%20jamun.png",
-   
-// description:"Soft, deep-fried milk dumplings soaked in sugar syrup."},
-//   {
-//     img:"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_288,h_360/MERCHANDISING_BANNERS/IMAGES/MERCH/2025/1/24/897bc750-6b57-4e7d-9365-87c1ab2c6d7e_Chinese2.png" ,
-//     description:"A fusion of bold flavors, stir-fries, and savory sauces."
-//   },
-//   {
-// img :"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_288,h_360/MERCHANDISING_BANNERS/IMAGES/MERCH/2024/7/2/8f508de7-e0ac-4ba8-b54d-def9db98959e_Rasgulla.png",
-// description:" Spongy, syrup-soaked cottage cheese dumplings."
-//   },
-//   {
-//     img:"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_288,h_360/MERCHANDISING_BANNERS/IMAGES/MERCH/2024/7/2/8f508de7-e0ac-4ba8-b54d-def9db98959e_Pure%20Veg.png",
-//     description:"A colorful medley of fresh vegetables, herbs, and spices."
-//   },
-//   {
-//     img:"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_288,h_360/MERCHANDISING_BANNERS/IMAGES/MERCH/2025/1/24/05a939eb-fd4e-4308-b989-d1c54f4421b3_northindian1.png",
-//     description:"A flavorful blend of spices, herbs, and tender meat or vegetables."
-//   },
-//   {
-//     img:"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_288,h_360/MERCHANDISING_BANNERS/IMAGES/MERCH/2024/7/2/6ef07bda-b707-48ea-9b14-2594071593d1_Desserts.png",
-//     description:"A sweet treat, often creamy, fruity, or nutty."
-//   },
-//   {
-//     img:"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_288,h_360/MERCHANDISING_BANNERS/IMAGES/MERCH/2025/2/4/2b999748-b33c-4560-a422-e90f3e60a5fb_Poori1.png",
-//     description:"A crispy, puffed Indian flatbread, often served with a side of chutney"
-    
-//   },
-//   {
-//     img:"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_288,h_360/MERCHANDISING_BANNERS/IMAGES/MERCH/2024/7/2/8f508de7-e0ac-4ba8-b54d-def9db98959e_Salad-1.png",
-//     description:"A fresh mix of greens, veggies, and sometimes proteins, all tossed together."
-//   }
-  
-// ]
-
-
 export default function FoodCarousel() {
-  const { handleAddToCart } = useCart();
-  const [selectedFood, setSelectedFood] = useState();
+  // const { handleAddToCart } = useCart();
+  // const [selectedFood, setSelectedFood] = useState();
 
 
   useEffect(() => {
@@ -193,19 +136,16 @@ export default function FoodCarousel() {
   return (
     <>
       <FoodShowcase />
-      {/* Menu Section */}
      <MenuGrid/>
-    
       <About />
-      {/* <EmptyCart/> */}
       <WhyChoose/>
+      <SpecialDishes/>
       <BlogPage />
       <Testimonials />
       <EventsPage/>
       <Gallery />
       <CateringEvents />
       <HappyCustomers/>
-      <SpecialDishes/>
       <FAQPage />
     </>
   );
