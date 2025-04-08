@@ -58,26 +58,16 @@ export const CartProvider = ({ children }) => {
     setCart([]);
   };
 
-  const increaseQuantity = (itemId) => {
-    setCart((prevCart) =>
-      prevCart.map((item) =>
-        item.id === itemId ? { ...item, quantity: item.quantity + 1 } : item
-      )
-    );
-  };
 
-  const decreaseQuantity = (itemId) => {
-    setCart((prevCart) => {
-      const item = prevCart.find((item) => item.id === itemId);
-      if (item && item.quantity > 1) {
-        return prevCart.map((cartItem) =>
-          cartItem.id === itemId ? { ...cartItem, quantity: cartItem.quantity - 1 } : cartItem
-        );
-      } else {
-        return prevCart.filter((cartItem) => cartItem.id !== itemId);
-      }
-    });
-  };
+    // Update quantity
+
+    const setQuantity = (id, qty) => {
+      setCart((prevCart) =>
+        prevCart.map((item) =>
+          item.id === id ? { ...item, quantity: qty > 0 ? parseInt(qty) : 1 } : item
+        )
+      );
+    };
 
   return (
     <CartContext.Provider
@@ -90,9 +80,14 @@ export const CartProvider = ({ children }) => {
         removeFromFavorites,
         getTotal,
         clearCart,
-        increaseQuantity,
-        decreaseQuantity,
+        increaseQuantity: (id) => setQuantity(id, cart.find(item => item.id === id)?.quantity + 1),
+        decreaseQuantity: (id) => {
+          const item = cart.find(item => item.id === id);
+          setQuantity(id, item?.quantity > 1 ? item.quantity - 1 : 0); // Or handle removal if quantity becomes 0
+        },
+        setQuantity, // Expose the setQuantity function if needed for direct input
       }}
+      
     >
       {children}
     </CartContext.Provider>

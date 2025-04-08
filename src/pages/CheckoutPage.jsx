@@ -102,16 +102,16 @@ const CheckoutPage = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-6xl mt-10 font-nunito">
+    <div className="container mx-auto px-10 py-8 max-w-4xl mt-20 mb-10 font-nunito bg-purple-100 ">
       <div className="text-center mb-8">
         <h1 className="text-3xl font-bold text-gray-800">Checkout</h1>
         <p className="text-gray-600 mt-2">Complete your purchase</p>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-8">
+      <div className="grid md:grid-cols-1 gap-8">
         {/* Billing Details Form */}
         <div className="bg-white p-6 rounded-lg shadow-md">
-          <h2 className="text-xl font-semibold mb-4 text-gray-800">Billing Information</h2>
+          <h2 className="text-2xl font-semibold mb-4 text-purple-800 text-center">Billing Information</h2>
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
@@ -171,9 +171,9 @@ const CheckoutPage = () => {
 
         {/* Order Summary */}
         <div className="bg-white p-6 rounded-lg shadow-md h-fit sticky top-4">
-          <h2 className="text-xl font-semibold mb-4 text-gray-800">Order Summary</h2>
+          <h2 className="text-3xl font-semibold mb-4 text-purple-800 text-center">Order Summary</h2>
           
-          <div className="divide-y divide-gray-200">
+          <div className="divide-y divide-gray-400">
             {cart.map((item) => (
               <div key={item.id} className="py-3 flex justify-between items-center">
                 <div className="flex items-center">
@@ -209,8 +209,8 @@ const CheckoutPage = () => {
             disabled={isSubmitting}
             className={`w-full mt-6 py-3 px-4 rounded-lg font-medium text-white transition-colors ${
               isSubmitting
-                ? "bg-blue-400 cursor-not-allowed"
-                : "bg-blue-600 hover:bg-blue-700"
+                ? "bg-purple-400 cursor-not-allowed"
+                : "bg-purple-600 hover:bg-black"
             }`}
           >
 {isSubmitting ? (

@@ -6,10 +6,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import { motion, AnimatePresence } from "framer-motion";
 
 const CartPage = () => {
-  const { cart, updateQuantity, removeFromCart, clearCart } = useCart();
+  const { cart, increaseQuantity, decreaseQuantity, removeFromCart, clearCart, setQuantity } = useCart(); // Using increase/decrease
   const navigate = useNavigate();
 
-  // Toast configuration
+  // Toast configuration (remains the same)
   const toastConfig = {
     position: "top-right",
     autoClose: 2000,
@@ -22,13 +22,19 @@ const CartPage = () => {
 
   const handleDecreaseQuantity = (id, quantity, name) => {
     if (quantity > 1) {
-      updateQuantity(id, quantity - 1);
+      decreaseQuantity(id); // Using decreaseQuantity
       toast.info(`${name} quantity decreased`, toastConfig);
     }
   };
-  
+
+  const handleQuantityChange = (itemId, newQty) => {
+    if (newQty >= 1) {
+      setQuantity(itemId, parseInt(newQty, 10)); // Still using setQuantity for direct input
+    }
+  };
+
   const handleIncreaseQuantity = (id, quantity, name) => {
-    updateQuantity(id, quantity + 1);
+    increaseQuantity(id); // Using increaseQuantity
     toast.success(`${name} quantity increased`, toastConfig);
   };
 
@@ -42,14 +48,14 @@ const CartPage = () => {
     toast.info("Cart cleared", toastConfig);
   };
 
-  // Calculate totals
+  // Calculate totals (remains the same)
   const subtotal = cart.reduce((sum, item) => sum + (Number(item.price) * item.quantity), 0);
   const taxRate = 0.1; // 10% tax
   const tax = subtotal * taxRate;
   const grandTotal = subtotal + tax;
   const deliveryFee = subtotal > 50 ? 0 : 5.99; // Free delivery for orders over $50
 
-  // Animation variants
+  // Animation variants (remains the same)
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0 },
@@ -57,99 +63,101 @@ const CartPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 font-nunito">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-12">
-          <h1 className="text-3xl font-extrabold text-gray-900 sm:text-4xl mt-10">
-            Your Shopping Cart
-          </h1>
-          <p className="mt-3 text-xl text-gray-500">
-            {cart.length} item{cart.length !== 1 ? 's' : ''} in your cart
-          </p>
-        </div>
 
-        {cart.length === 0 ? (
-          <EmptyCart />
-        ) : (
-          <div className="flex flex-col lg:flex-row gap-8">
-            {/* Cart Items */}
-            <div className="lg:w-2/3">
-              <div className="bg-white shadow-lg rounded-xl overflow-hidden">
-                <div className="overflow-x-auto">
-                  <table className="min-w-full divide-y divide-gray-200">
-                    <thead className="bg-gray-50">
-                      <tr>
-                        <th scope="col" className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Product
-                        </th>
-                        <th scope="col" className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Price
-                        </th>
-                        <th scope="col" className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Quantity
-                        </th>
-                        <th scope="col" className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Total
-                        </th>
-                        <th scope="col" className="px-6 py-4 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Action
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody className="bg-white divide-y divide-gray-200">
-                      <AnimatePresence>
-                        {cart.map((item) => {
-                          const price = Number(item.price) || 0;
-                          const total = (price * item.quantity).toFixed(2);
-
-                          return (
-                            <motion.tr
-                              key={item.id}
-                              variants={itemVariants}
-                              initial="hidden"
-                              animate="visible"
-                              exit="exit"
-                              transition={{ duration: 0.3 }}
-                              className="hover:bg-gray-50"
-                            >
-                              <td className="px-6 py-4 whitespace-nowrap">
-                                <div className="flex items-center">
-                                  <div className="flex-shrink-0 h-16 w-16">
-                                    <img
-                                      className="h-full w-full rounded-md object-cover"
-                                      src={item.img}
-                                      alt={item.name}
-
-                                    />
+      <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 font-nunito">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12">
+            <h1 className="text-3xl font-extrabold text-gray-900 sm:text-4xl mt-10">
+              Your Shopping Cart
+            </h1>
+            <p className="mt-3 text-xl text-gray-500">
+              {cart.length} item{cart.length !== 1 ? 's' : ''} in your cart
+            </p>
+          </div>
+  
+          {cart.length === 0 ? (
+            <EmptyCart />
+          ) : (
+            <div className="flex flex-col lg:flex-row gap-8">
+              {/* Cart Items */}
+              <div className="lg:w-2/3">
+                <div className="bg-white shadow-lg rounded-xl overflow-hidden">
+                  <div className="overflow-x-auto">
+                    <table className="min-w-full divide-y divide-gray-200">
+                      <thead className="bg-gray-50">
+                        <tr>
+                          <th scope="col" className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Product
+                          </th>
+                          <th scope="col" className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Price
+                          </th>
+                          <th scope="col" className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Quantity
+                          </th>
+                          <th scope="col" className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Total
+                          </th>
+                          <th scope="col" className="px-6 py-4 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Action
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody className="bg-white divide-y divide-gray-200">
+                        <AnimatePresence>
+                          {cart.map((item) => {
+                            const price = Number(item.price) || 0;
+                            const total = (price * item.quantity).toFixed(2);
+  
+                            return (
+                              <motion.tr
+                                key={item.id}
+                                variants={itemVariants}
+                                initial="hidden"
+                                animate="visible"
+                                exit="exit"
+                                transition={{ duration: 0.3 }}
+                                className="hover:bg-gray-50"
+                              >
+                                <td className="px-6 py-4 whitespace-nowrap">
+                                  <div className="flex items-center">
+                                    <div className="flex-shrink-0 h-16 w-16">
+                                      <img
+                                        className="h-full w-full rounded-md object-cover"
+                                        src={item.img}
+                                        alt={item.name}
+  
+                                      />
+                                    </div>
+                                    <div className="ml-4">
+                                      <div className="text-sm font-medium text-gray-900">{item.name}</div>
+                                      <div className="text-sm text-gray-500">{item.category || 'Food Item'}</div>
+                                    </div>
                                   </div>
-                                  <div className="ml-4">
-                                    <div className="text-sm font-medium text-gray-900">{item.name}</div>
-                                    <div className="text-sm text-gray-500">{item.category || 'Food Item'}</div>
-                                  </div>
-                                </div>
-                              </td>
-                              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                ${price.toFixed(2)}
-                              </td>
-                              <td className="px-6 py-4 whitespace-nowrap">
-                                <div className="flex items-center space-x-2">
-                                  <button
-                                    onClick={() => handleDecreaseQuantity(item.id, item.quantity, item.name)}
-                                    disabled={item.quantity === 1}
-                                    className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                                  >
-                                    −
-                                  </button>
-                                  <span className="text-sm font-medium w-8 text-center">
-                                    {item.quantity}
-                                  </span>
-                                  <button
-                                    onClick={() => handleIncreaseQuantity(item.id, item.quantity, item.name)}
-                                    className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors"
-                                  >
-                                    +
-                                  </button>
-                                </div>
+                                </td>
+                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                  ${price.toFixed(2)}
+                                </td>
+                                <td className="px-6 py-4 whitespace-nowrap">
+                            {/* Quantity Controls */}
+  <div className="col-span-1 md:col-span-3 flex justify-center mt-4 md:mt-0">
+    <div className="flex items-center border border-gray-300 rounded-md">
+    <button
+      onClick={() => decreaseQuantity(item.id)} // Using decreaseQuantity directly
+      className="px-3 py-1 text-gray-600 hover:bg-gray-100 transition-colors"
+      disabled={item.quantity <= 1}
+    >
+      -
+    </button>
+    <span className="px-3 py-1 text-gray-900">{item.quantity}</span>
+    <button
+      onClick={() => increaseQuantity(item.id)} // Using increaseQuantity directly
+      className="px-3 py-1 text-gray-600 hover:bg-gray-100 transition-colors"
+    >
+      +
+    </button>
+    </div>
+</div>
                               </td>
                               <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                 ${total}
@@ -246,3 +254,9 @@ const CartPage = () => {
 };
 
 export default CartPage;
+
+
+
+
+
+

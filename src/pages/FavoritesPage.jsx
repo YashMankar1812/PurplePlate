@@ -13,7 +13,7 @@ const FavoritesPage = () => {
 
   if (favorites.length === 0) {
     return (
-      <div className="flex justify-center items-center h-screen font-nunito">
+      <div className="flex justify-center items-center h-screen font-nunito ">
         <div className="text-center">
           <p className="text-2xl font-semibold text-gray-700 mb-4">Your Favorites list is empty.</p>
           <Link to="/menu" className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
@@ -25,7 +25,7 @@ const FavoritesPage = () => {
   }
 
   return (
-    <div className="min-h-screen py-16 px-4 sm:px-6 lg:px-8 bg-gray-50 font-nunito">
+    <div className="min-h-screen py-16 px-4 sm:px-6 lg:px-8 bg-gray-50 mt-10 font-nunito">
       <div className="max-w-3xl mx-auto">
         <h1 className="text-3xl font-extrabold text-gray-900 mb-8 text-center">Your Favorites</h1>
         <ul className="space-y-6">
