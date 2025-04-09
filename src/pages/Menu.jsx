@@ -304,23 +304,26 @@ const Menu = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 text-gray-800 py-8 px-4 sm:px-6 lg:px-10 font-nunito">
+    <div className="min-h-screen bg-gray-100 text-gray-800 w-full font-nunito p-4 sm:p-6 lg:p-10 " >
       <ToastContainer />
-      <h2 className="text-5xl text-purple-700 text-center uppercase p-10">Our Menu</h2>
-      <div className="flex flex-col md:flex-row items-center justify-center gap-y-4 md:gap-x-6 py-4">
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-dancing font-bold text-purple-700 text-center md:text-left">Special Dishes</h2>
-        <div className="overflow-x-auto scrollbar-hide md:overflow-visible">
-          <div className="flex flex-row gap-2 sm:gap-3 p-3 sm:p-0 justify-start md:justify-center">
+      <h2 className="text-3xl sm:text-4xl md:text-5xl text-purple-700 text-center uppercase mt-20">Our Menu</h2>
+   {/* Improved category filter section */}
+   <div className="flex flex-col md:flex-row items-center justify-between gap-4 py-4 w-full">
+        <h2 className="text-2xl sm:text-3xl font-dancing font-bold text-purple-700 whitespace-nowrap">
+          Special Dishes
+        </h2>
+        
+        <div className="w-full md:w-auto overflow-x-auto scrollbar-hide">
+          <div className="flex gap-2 py-2 min-w-max">
             {categoriesToShow.map((category, index) => (
               <button
                 key={category}
-                className={`px-3 py-1.5 text-xs font-semibold rounded-full whitespace-nowrap min-w-[80px] text-center transition-all ${
+                className={`flex-shrink-0 px-4 py-2 text-sm sm:text-base font-medium rounded-full transition-all duration-200 ease-in-out ${
                   filter === category
-                    ? "bg-purple-600 text-white shadow-md scale-105"
-                    : "bg-gray-200 hover:bg-purple-400 hover:text-white"
+                    ? "bg-purple-600 text-white shadow-md"
+                    : "bg-gray-100 hover:bg-purple-100 hover:text-purple-700"
                 }`}
                 onClick={() => setFilter(category)}
-                style={{ transitionDelay: `${index * 50}ms` }}
               >
                 {category}
               </button>
@@ -328,18 +331,27 @@ const Menu = () => {
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-6xl mx-auto mt-6 ">
+
+      {/* Menu items grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 max-w-7xl mx-auto mt-6">
         {filteredDishes.map((dish, index) => (
           <div
             key={dish.id}
-            className="bg-white p-4 rounded-lg shadow-lg hover:shadow-xl transition-all transform duration-300 m-10"
+            className="bg-white p-4 rounded-lg shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 duration-300"
             data-aos="fade-up"
-            data-aos-delay={index * 100}
+            data-aos-delay={index * 50}
           >
-            <img src={dish.img} alt={dish.name} className="w-full h-40 object-cover rounded-md" />
-            <h3 className="mt-3 text-lg font-bold">{dish.name}</h3>
-            <p className="text-gray-600 text-sm">{dish.description}</p>
-            <p className="text-purple-700 font-semibold mt-2">{dish.price}</p>
+            <img 
+              src={dish.img} 
+              alt={dish.name} 
+              className="w-full h-48 object-cover rounded-md mb-3"
+              onError={(e) => {
+                e.target.src = "https://via.placeholder.com/300x200?text=Image+Not+Available";
+              }}
+            />
+            <h3 className="text-lg font-bold line-clamp-1">{dish.name}</h3>
+            <p className="text-gray-600 text-sm line-clamp-2 mb-2">{dish.description}</p>
+            <p className="text-purple-700 font-semibold">{dish.price}</p>
             <button
               className="mt-3 w-full border border-orange-500 text-orange-500 font-semibold px-4 py-2 rounded-lg hover:bg-orange-400 hover:text-white transition-all"
               onClick={() => handleAddToCart(dish)}
@@ -349,6 +361,7 @@ const Menu = () => {
           </div>
         ))}
       </div>
+    {/* </div> */}
     </div>
   );
 };

@@ -109,7 +109,7 @@ const foodItems = [
   {
     id: 15,
     img: "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_288,h_360/MERCHANDISING_BANNERS/IMAGES/MERCH/2024/7/2/8f508de7-e0ac-4ba8-b54d-def9db98959e_Salad-1.png",
-    name: "Fresh Salad",
+    name: "South Indian",
     price: 6.99,
     description: "A fresh mix of greens, veggies, and sometimes proteins, all tossed together."
   }
